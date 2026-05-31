@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dividir Conta</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+      background: linear-gradient(to right, green 33%, white 33% 66%, red 66%);
+      min-height: 100vh;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      cursor: pointer;
+    }
+    #relatorio {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: rgba(255,255,255,0.8);
+      border-radius: 8px;
+    }
+    h2, h3 {
+      background-color: rgba(255,255,255,0.7);
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .campo-total {
+      margin-top: 20px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h2>Dividir Conta</h2>
+  
+  <div class="campo-total">
+    <label for="valorTotal">Valor total da conta:</label><br>
+    <input type="number" id="valorTotal" step="0.01">
+  </div>
+  
+  <div id="clientes"></div>
+  
+  <button onclick="adicionarCliente()">Adicionar Cliente</button>
+  <button onclick="gerarRelatorio()">OK</button>
+  
+  <h3>Saldo restante: R$ <span id="restante">0.00</span></h3>
+  
+  <div id="relatorio"></div>
+  
+  <script>
+    let pagamentos = [];
+    
+    function atualizarRestante() {
+      const total = parseFloat(document.getElementById("valorTotal").value) || 0;
+      const soma = pagamentos.reduce((acc, val) => acc + val, 0);
+      const restante = total - soma;
+      document.getElementById("restante").textContent = restante.toFixed(2);
+    }
+    
+    function adicionarCliente() {
+      const div = document.createElement("div");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.step = "0.01";
+      input.placeholder = "Valor do cliente";
+      
+      input.addEventListener("input", () => {
+        const index = Array.from(document.getElementById("clientes").children).indexOf(div);
+        pagamentos[index] = parseFloat(input.value) || 0;
+        atualizarRestante();
+      });
+      
+      div.appendChild(input);
+      document.getElementById("clientes").appendChild(div);
+      pagamentos.push(0);
+    }
+    
+    function gerarRelatorio() {
+      const total = parseFloat(document.getElementById("valorTotal").value) || 0;
+      let relatorio = "<h4>Relatório Final</h4>";
+      pagamentos.forEach((valor, i) => {
+        relatorio += `Cliente ${i+1}: R$ ${valor.toFixed(2)}<br>`;
+      });
+      const soma = pagamentos.reduce((acc, val) => acc + val, 0);
+      const restante = total - soma;
+      relatorio += `<strong>Total pago: R$ ${soma.toFixed(2)}</strong><br>`;
+      relatorio += `<strong>Saldo restante: R$ ${restante.toFixed(2)}</strong>`;
+      document.getElementById("relatorio").innerHTML = relatorio;
+    }
+  </script>
+</body>
+</html>

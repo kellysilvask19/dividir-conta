@@ -3,37 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Dividir Conta</title>
+  <!-- Faz a página se adaptar ao tamanho da tela do celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 0;
+      padding: 20px;
       text-align: center;
       background: linear-gradient(to right, green 33%, white 33% 66%, red 66%);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
     input, button {
       margin: 10px;
-      padding: 10px;
-      font-size: 16px;
+      padding: 12px;
+      font-size: 18px; /* aumenta o tamanho para celular */
+      width: 80%;      /* ocupa boa parte da tela */
+      max-width: 400px;
+      box-sizing: border-box;
     }
     button {
       cursor: pointer;
+      border: none;
+      border-radius: 5px;
     }
     #relatorio {
       margin-top: 20px;
-      padding: 10px;
-      background-color: rgba(255,255,255,0.8);
+      padding: 15px;
+      background-color: rgba(255,255,255,0.85);
       border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
     }
     h2, h3 {
       background-color: rgba(255,255,255,0.7);
       display: inline-block;
-      padding: 5px 10px;
+      padding: 8px 12px;
       border-radius: 5px;
+      margin-bottom: 15px;
     }
     .campo-total {
       margin-top: 20px;
-      display: block;
+      width: 100%;
     }
   </style>
 </head>
@@ -47,8 +63,8 @@
   
   <div id="clientes"></div>
   
-  <button onclick="adicionarCliente()">Adicionar Cliente</button>
-  <button onclick="gerarRelatorio()">OK</button>
+  <button style="background-color:green; color:white;" onclick="adicionarCliente()">Adicionar Cliente</button>
+  <button style="background-color:red; color:white;" onclick="gerarRelatorio()">OK</button>
   
   <h3>Saldo restante: R$ <span id="restante">0.00</span></h3>
   

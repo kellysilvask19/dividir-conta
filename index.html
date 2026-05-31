@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Dividir Conta</title>
-  <!-- Faz a página se adaptar ao tamanho da tela do celular -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -16,40 +15,61 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
     }
-    input, button {
+    input {
       margin: 10px;
       padding: 12px;
-      font-size: 18px; /* aumenta o tamanho para celular */
-      width: 80%;      /* ocupa boa parte da tela */
+      font-size: 18px;
+      width: 80%;
       max-width: 400px;
       box-sizing: border-box;
     }
     button {
-      cursor: pointer;
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 18px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+      box-sizing: border-box;
+    }
+    /* Botões com cores mais agradáveis */
+    .btn-adicionar {
+      background-color: #28a745; /* verde */
+      color: white;
+    }
+    .btn-ok {
+      background-color: #007bff; /* azul */
+      color: white;
+    }
+    #saldo {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa; /* cinza claro */
+      border: 2px solid #333;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      width: 90%;
+      max-width: 400px;
     }
     #relatorio {
       margin-top: 20px;
       padding: 15px;
-      background-color: rgba(255,255,255,0.85);
+      background-color: rgba(255,255,255,0.9);
       border-radius: 8px;
       width: 90%;
       max-width: 500px;
       text-align: left;
     }
-    h2, h3 {
+    h2 {
       background-color: rgba(255,255,255,0.7);
       display: inline-block;
       padding: 8px 12px;
       border-radius: 5px;
       margin-bottom: 15px;
-    }
-    .campo-total {
-      margin-top: 20px;
-      width: 100%;
     }
   </style>
 </head>
@@ -63,10 +83,10 @@
   
   <div id="clientes"></div>
   
-  <button style="background-color:green; color:white;" onclick="adicionarCliente()">Adicionar Cliente</button>
-  <button style="background-color:red; color:white;" onclick="gerarRelatorio()">OK</button>
+  <button class="btn-adicionar" onclick="adicionarCliente()">Adicionar Cliente</button>
+  <button class="btn-ok" onclick="gerarRelatorio()">OK</button>
   
-  <h3>Saldo restante: R$ <span id="restante">0.00</span></h3>
+  <div id="saldo">Saldo restante: R$ <span id="restante">0.00</span></div>
   
   <div id="relatorio"></div>
   
@@ -100,16 +120,4 @@
     
     function gerarRelatorio() {
       const total = parseFloat(document.getElementById("valorTotal").value) || 0;
-      let relatorio = "<h4>Relatório Final</h4>";
-      pagamentos.forEach((valor, i) => {
-        relatorio += `Cliente ${i+1}: R$ ${valor.toFixed(2)}<br>`;
-      });
-      const soma = pagamentos.reduce((acc, val) => acc + val, 0);
-      const restante = total - soma;
-      relatorio += `<strong>Total pago: R$ ${soma.toFixed(2)}</strong><br>`;
-      relatorio += `<strong>Saldo restante: R$ ${restante.toFixed(2)}</strong>`;
-      document.getElementById("relatorio").innerHTML = relatorio;
-    }
-  </script>
-</body>
-</html>
+      let relatorio = "<h4>Rel

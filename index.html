@@ -35,7 +35,6 @@
       max-width: 300px;
       box-sizing: border-box;
     }
-    /* Botões com cores mais agradáveis */
     .btn-adicionar {
       background-color: #28a745; /* verde */
       color: white;
@@ -92,32 +91,46 @@
   
   <script>
     let pagamentos = [];
-    
+
     function atualizarRestante() {
       const total = parseFloat(document.getElementById("valorTotal").value) || 0;
       const soma = pagamentos.reduce((acc, val) => acc + val, 0);
       const restante = total - soma;
       document.getElementById("restante").textContent = restante.toFixed(2);
     }
-    
+
     function adicionarCliente() {
       const div = document.createElement("div");
       const input = document.createElement("input");
       input.type = "number";
       input.step = "0.01";
       input.placeholder = "Valor do cliente";
-      
+
+      // índice fixo baseado na ordem de criação
+      const index = pagamentos.length;
+
       input.addEventListener("input", () => {
-        const index = Array.from(document.getElementById("clientes").children).indexOf(div);
         pagamentos[index] = parseFloat(input.value) || 0;
         atualizarRestante();
       });
-      
+
       div.appendChild(input);
       document.getElementById("clientes").appendChild(div);
       pagamentos.push(0);
     }
-    
+
     function gerarRelatorio() {
       const total = parseFloat(document.getElementById("valorTotal").value) || 0;
-      let relatorio = "<h4>Rel
+      let relatorio = "<h4>Relatório Final</h4>";
+      pagamentos.forEach((valor, i) => {
+        relatorio += `Cliente ${i+1}: R$ ${valor.toFixed(2)}<br>`;
+      });
+      const soma = pagamentos.reduce((acc, val) => acc + val, 0);
+      const restante = total - soma;
+      relatorio += `<strong>Total pago: R$ ${soma.toFixed(2)}</strong><br>`;
+      relatorio += `<strong>Saldo restante: R$ ${restante.toFixed(2)}</strong>`;
+      document.getElementById("relatorio").innerHTML = relatorio;
+    }
+  </script>
+</body>
+</html>
